@@ -23,7 +23,7 @@ public class GuestController {
 	@Autowired
 	private GuestService guestService;
 
-	@PostMapping("/saveGuest")
+	@PostMapping("/saveGuest")//https
 	public Guest saveGuest(@RequestBody Guest guest) {
 		return guestService.saveGuest(guest);
 	}
