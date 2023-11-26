@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Pattern;
 
 @Entity
 public class Admin {
@@ -14,7 +15,8 @@ public class Admin {
 	private int id;
 	@Column(unique = true, nullable = false, length = 10)
 	private String username;
-	@Column(nullable = false, length = 10)
+	@Column(nullable = false, length = 20)
+	@Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$", message = "Invalid password. It must be at least 8 characters long and include at least one letter and one digit.")
 	private String pass;
 
 	public Admin() {
