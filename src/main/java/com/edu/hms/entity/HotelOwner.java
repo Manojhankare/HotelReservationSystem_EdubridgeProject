@@ -44,6 +44,7 @@ public class HotelOwner {
 
     @Column(name = "Password", nullable = false)
     @NotBlank(message = "Password should not be blank")
+    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$", message = "Invalid password. It must be at least 8 characters long and include at least one letter and one digit.")
     private String password;
 
     @OneToMany(mappedBy = "hotelOwner")
