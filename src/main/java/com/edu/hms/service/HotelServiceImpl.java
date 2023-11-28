@@ -17,7 +17,7 @@ public class HotelServiceImpl implements HotelService {
 
 	@Override
 	public Hotel saveHotel(Hotel hotel) {
-		if(findByemail)
+//		if(findByemail)
 		return hotelRepository.save(hotel);
 	}
 
