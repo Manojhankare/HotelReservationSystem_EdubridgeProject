@@ -20,5 +20,7 @@ public interface GuestService {
 	public Guest updatePhone(Integer guestId, String newPhone) throws GuestNotFoundException;
 
 	public Guest updateAddress(Integer guestId, String newAddress) throws GuestNotFoundException;
+
+	public void deleteGuest(Integer guestId) throws GuestNotFoundException	;
  
 }

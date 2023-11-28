@@ -10,33 +10,38 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
- 
- 
+
 @Entity
 public class Room {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int rId;
+
+	@Column
+	private int RoomNo;
+
 	@Column(name = "RoomType", nullable = false, length = 20)
 	private String roomtype;
 	@Column(name = "RoomPrice", nullable = false, length = 20)
 	private double roomprice;
-	
+
 	@ManyToOne
-    @JoinColumn(name = "hId")
-    private Hotel hotel;
+	@JoinColumn(name = "hId")
+	private Hotel hotel;
 
 	@OneToMany(mappedBy = "room")
-    private List<Reservations> reservations;
+	private List<Reservations> reservations;
 
 	public Room() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Room(String roomtype, double roomprice, Hotel hotel, List<Reservations> reservations) {
+	public Room(int rId, int roomNo, String roomtype, double roomprice, Hotel hotel, List<Reservations> reservations) {
 		super();
+		this.rId = rId;
+		RoomNo = roomNo;
 		this.roomtype = roomtype;
 		this.roomprice = roomprice;
 		this.hotel = hotel;
@@ -59,7 +64,7 @@ public class Room {
 		this.roomtype = roomtype;
 	}
 
- 	public double getRoomprice() {
+	public double getRoomprice() {
 		return roomprice;
 	}
 
@@ -83,12 +88,18 @@ public class Room {
 		this.reservations = reservations;
 	}
 
+	public int getRoomNo() {
+		return RoomNo;
+	}
+
+	public void setRoomNo(int roomNo) {
+		RoomNo = roomNo;
+	}
+
 	@Override
 	public String toString() {
-		return "Room [rId=" + rId + ", roomtype=" + roomtype + ", rprice=" + roomprice + ", hotel=" + hotel
-				+ ", reservations=" + reservations + "]";
+		return "Room [rId=" + rId + ", RoomNo=" + RoomNo + ", roomtype=" + roomtype + ", roomprice=" + roomprice
+				+ ", hotel=" + hotel + ", reservations=" + reservations + "]";
 	}
-	
-	
-	
+
 }

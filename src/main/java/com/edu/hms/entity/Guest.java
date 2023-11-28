@@ -28,7 +28,6 @@ public class Guest {
     @Column(name = "Age", nullable = false)
     @Min(value = 18, message = "Age should be at least 18")
     @Max(value = 80, message = "Age should not exceed 80")
-    @NotBlank(message = "Age should not be null!!!")
     private int gage;
 
     @Column(name = "GuestEmail", nullable = false, unique = true)
@@ -49,7 +48,7 @@ public class Guest {
 
     @Column(name = "Username", nullable = false, unique = true)
     @NotBlank(message = "Username should not be null!!!")
-    @Size(max = 50, message = "Username should not exceed 50 characters")
+    @Size(max = 10, message = "Username should not exceed 10 characters")
     private String gusername;
 
     @Column(name = "Pass", nullable = false)
