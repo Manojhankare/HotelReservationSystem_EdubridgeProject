@@ -18,6 +18,8 @@ public interface HotelOwnerService {
 
 	void deleteHotelOwner(Integer ownerId);
 
-	List<HotelOwner> searchHotelOwners(String ownerName, String ownerEmail, String contactNumber);
+
+
+//	List<HotelOwner> searchHotelOwners(String ownerName, String ownerEmail, String ownerContactNumber);
 
 }
