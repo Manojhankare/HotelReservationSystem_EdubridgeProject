@@ -50,7 +50,9 @@ public class Guest {
     @NotBlank(message = "Username should not be null!!!")
     @Size(max = 10, message = "Username should not exceed 10 characters")
     private String gusername;
-
+    
+    
+    //password validations
     @Column(name = "Pass", nullable = false)
     @NotBlank(message = "Password should not be null or empty.")
     @Pattern(regexp = "^(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$",
