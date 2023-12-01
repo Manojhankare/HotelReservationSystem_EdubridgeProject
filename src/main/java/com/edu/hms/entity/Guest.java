@@ -52,8 +52,13 @@ public class Guest {
     private String gusername;
 
     @Column(name = "Pass", nullable = false)
-    @NotBlank(message = "Pass should not be null!!!")
-    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$", message = "Invalid password. It must be at least 8 characters long and include at least one letter and one digit.")
+    @NotBlank(message = "Password should not be null or empty.")
+    @Pattern(regexp = "^(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$",
+             message = "Invalid password. It must meet the following criteria:\n" +
+                       "- At least 8 characters long\n" +
+                       "- At least one uppercase letter\n" +
+                       "- At least one digit\n" +
+                       "- At least one symbol (@$!%*?&)")
     private String gpass;
 
     @OneToMany(mappedBy = "guest")
