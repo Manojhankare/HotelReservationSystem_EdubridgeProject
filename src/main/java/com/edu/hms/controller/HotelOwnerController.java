@@ -70,12 +70,12 @@ public class HotelOwnerController {
 	    }
 
 	    // Search
-	    @GetMapping("/searchHotelOwners")
-	    public List<HotelOwner> searchHotelOwners(@RequestParam(name = "ownerName", required = false) String ownerName,
-	                                              @RequestParam(name = "ownerEmail", required = false) String ownerEmail,
-	                                              @RequestParam(name = "contactNumber", required = false) String contactNumber) {
-	        return hotelOwnerService.searchHotelOwners(ownerName, ownerEmail, contactNumber);
-	    }
+//	    @GetMapping("/searchHotelOwners")
+//	    public List<HotelOwner> searchHotelOwners(@RequestParam(name = "ownerName", required = false) String ownerName,
+//	                                              @RequestParam(name = "ownerEmail", required = false) String ownerEmail,
+//	                                              @RequestParam(name = "ownercontactNumber", required = false) String ownerContactNumber) {
+//	        return hotelOwnerService.searchHotelOwners(ownerName, ownerEmail, ownerContactNumber);
+//	    }
 	
 
 }

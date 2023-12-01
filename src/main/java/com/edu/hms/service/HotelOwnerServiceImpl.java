@@ -39,7 +39,7 @@ public class HotelOwnerServiceImpl implements HotelOwnerService {
 			// Update the fields that can be modified
 			existingOwner.setOwnerName(updatedHotelOwner.getOwnerName());
 			existingOwner.setOwnerEmail(updatedHotelOwner.getOwnerEmail());
-			existingOwner.setContactNumber(updatedHotelOwner.getContactNumber());
+			existingOwner.setOwnerContactNumber(updatedHotelOwner.getOwnerContactNumber());
 			// Save the updated hotel owner
 			return hotelOwnerRepository.save(existingOwner);
 		}
@@ -51,10 +51,13 @@ public class HotelOwnerServiceImpl implements HotelOwnerService {
 		hotelOwnerRepository.deleteById(ownerId);
 	}
 
-	@Override
-	public List<HotelOwner> searchHotelOwners(String ownerName, String ownerEmail, String contactNumber) {
-		
-		return hotelOwnerRepository.findByOwnerNameAndOwnerEmailAndContactNumber(ownerName, ownerEmail, contactNumber);
-	}
+
+	
+
+//	@Override
+//	public List<HotelOwner> searchHotelOwners(String ownerName, String ownerEmail, String ownerContactNumber) {
+//		
+//		return hotelOwnerRepository.findByOwnerNameAndOwnerEmailAndOwnerContactNumber(ownerName, ownerEmail, ownerContactNumber);
+//	}
 	
 }
