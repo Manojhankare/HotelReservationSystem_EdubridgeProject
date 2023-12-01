@@ -35,16 +35,18 @@ public class HotelOwner {
 	@NotBlank(message = "Contact number should not be blank")
 	@Size(max = 15, message = "Contact number should not exceed 15 characters")
 	@Pattern(regexp = "^[0-9]*$", message = "Contact number should only contain digits")
-	private String contactNumber;
+	private String OwnerContactNumber;
 
 	@Column(name = "Username", nullable = false, unique = true)
 	@NotBlank(message = "Username should not be blank")
 	@Size(max = 50, message = "Username should not exceed 50 characters")
-	private String hoUsername;
+	private String OwnerUsername;
 
 	@Column(name = "Password", nullable = false)
 	@NotBlank(message = "Password should not be blank")
-	//@Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$", message = "Invalid password. It must be at least 8 characters long and include at least one letter and one digit.")
+	@Pattern(regexp = "^(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$", message = "Invalid password. It must meet the following criteria:\n"
+			+ "- At least 8 characters long\n" + "- At least one uppercase letter\n" + "- At least one digit\n"
+			+ "- At least one symbol (@$!%*?&)")
 	private String password;
 
 	@OneToMany(mappedBy = "hotelOwner")
@@ -55,19 +57,14 @@ public class HotelOwner {
 		// TODO Auto-generated constructor stub
 	}
 
-	public HotelOwner(Long ownerId,
-			@NotBlank(message = "Owner name should not be blank") @Size(max = 255, message = "Owner name should not exceed 255 characters") String ownerName,
-			@NotBlank(message = "Owner email should not be blank") @Email(message = "Invalid email format") @Size(max = 255, message = "Owner email should not exceed 255 characters") String ownerEmail,
-			@NotBlank(message = "Contact number should not be blank") @Size(max = 15, message = "Contact number should not exceed 15 characters") @Pattern(regexp = "^[0-9]*$", message = "Contact number should only contain digits") String contactNumber,
-			@NotBlank(message = "Username should not be blank") @Size(max = 50, message = "Username should not exceed 50 characters") String hoUsername,
-			@NotBlank(message = "Password should not be blank") @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$", message = "Invalid password. It must be at least 8 characters long and include at least one letter and one digit.") String password,
-			List<Hotel> hotel) {
+	public HotelOwner(Long ownerId, String ownerName, String ownerEmail, String OwnerContactNumber,
+			String OwnerUsername, String password, List<Hotel> hotel) {
 		super();
 		this.ownerId = ownerId;
 		this.ownerName = ownerName;
 		this.ownerEmail = ownerEmail;
-		this.contactNumber = contactNumber;
-		this.hoUsername = hoUsername;
+		this.OwnerContactNumber = OwnerContactNumber;
+		this.OwnerUsername = OwnerUsername;
 		this.password = password;
 		this.hotel = hotel;
 	}
@@ -96,20 +93,20 @@ public class HotelOwner {
 		this.ownerEmail = ownerEmail;
 	}
 
-	public String getContactNumber() {
-		return contactNumber;
+	public String getOwnerContactNumber() {
+		return OwnerContactNumber;
 	}
 
-	public void setContactNumber(String contactNumber) {
-		this.contactNumber = contactNumber;
+	public void setOwnerContactNumber(String ownerContactNumber) {
+		OwnerContactNumber = ownerContactNumber;
 	}
 
-	public String getHoUsername() {
-		return hoUsername;
+	public String getOwnerUsername() {
+		return OwnerUsername;
 	}
 
-	public void setHoUsername(String hoUsername) {
-		this.hoUsername = hoUsername;
+	public void setOwnerUsername(String ownerUsername) {
+		OwnerUsername = ownerUsername;
 	}
 
 	public String getPassword() {
@@ -131,8 +128,7 @@ public class HotelOwner {
 	@Override
 	public String toString() {
 		return "HotelOwner [ownerId=" + ownerId + ", ownerName=" + ownerName + ", ownerEmail=" + ownerEmail
-				+ ", contactNumber=" + contactNumber + ", hoUsername=" + hoUsername + ", password=" + password
-				+ ", hotel=" + hotel + "]";
+				+ ", OwnerContactNumber=" + OwnerContactNumber + ", OwnerUsername=" + OwnerUsername + ", password="
+				+ password + ", hotel=" + hotel + "]";
 	}
-
 }
