@@ -7,6 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Hotel {
@@ -15,19 +17,34 @@ public class Hotel {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "HotelID")
 	private int hId;
+
 	@Column(name = "HotelName", nullable = false, length = 55)
+	@NotBlank(message = "Hotel name should not be blank")
+	@Size(max = 55, message = "Hotel name should not exceed 55 characters")
 	private String hname;
+
 	@Column(name = "Email", nullable = false, length = 55)
-	@Email
+	@Email(message = "Invalid email format")
 	private String hemail;
+
 	@Column(name = "ContactNo.", nullable = false, length = 10)
+	@Size(min = 10, max = 10, message = "Contact number should be 10 digits")
 	private int hno;
+
 	@Column(name = "Address", nullable = false, length = 90)
+	@NotBlank(message = "Hotel address should not be blank")
+	@Size(max = 90, message = "Address should not exceed 90 characters")
 	private String hadd;
+
 	@Column(name = "City", nullable = false, length = 55)
+	@NotBlank(message = "City should not be blank")
+	@Size(max = 55, message = "City name should not exceed 55 characters")
 	private String hcity;
 	
-	@ManyToOne 
+	@Column
+	private String imgUrl;
+
+	@ManyToOne
 	private HotelOwner hotelOwner;
 
 	public Hotel() {
@@ -106,5 +123,5 @@ public class Hotel {
 		return "Hotel [hId=" + hId + ", hname=" + hname + ", hemail=" + hemail + ", hno=" + hno + ", hadd=" + hadd
 				+ ", hcity=" + hcity + ", hotelOwner=" + hotelOwner + "]";
 	}
-	
+
 }

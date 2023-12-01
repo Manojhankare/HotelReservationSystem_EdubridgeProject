@@ -82,4 +82,13 @@ public class GuestServiceImpl implements GuestService {
 		}
 	}
 
+	@Override
+	public void deleteGuest(Integer guestId) throws GuestNotFoundException {
+		Optional<Guest> guestOptional = guestRepository.findById(guestId);
+		if (guestOptional.isPresent()) {
+			guestRepository.deleteById(guestId);
+		} else {
+			throw new GuestNotFoundException("Guest with ID " + guestId + " not found.");
+		}
+	}
 }

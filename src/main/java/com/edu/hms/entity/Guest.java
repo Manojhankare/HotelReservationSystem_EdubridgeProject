@@ -28,7 +28,6 @@ public class Guest {
     @Column(name = "Age", nullable = false)
     @Min(value = 18, message = "Age should be at least 18")
     @Max(value = 80, message = "Age should not exceed 80")
-    @NotBlank(message = "Age should not be null!!!")
     private int gage;
 
     @Column(name = "GuestEmail", nullable = false, unique = true)
@@ -49,12 +48,19 @@ public class Guest {
 
     @Column(name = "Username", nullable = false, unique = true)
     @NotBlank(message = "Username should not be null!!!")
-    @Size(max = 50, message = "Username should not exceed 50 characters")
+    @Size(max = 10, message = "Username should not exceed 10 characters")
     private String gusername;
-
+    
+    
+    //password validations
     @Column(name = "Pass", nullable = false)
-    @NotBlank(message = "Pass should not be null!!!")
-    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$", message = "Invalid password. It must be at least 8 characters long and include at least one letter and one digit.")
+    @NotBlank(message = "Password should not be null or empty.")
+    @Pattern(regexp = "^(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$",
+             message = "Invalid password. It must meet the following criteria:\n" +
+                       "- At least 8 characters long\n" +
+                       "- At least one uppercase letter\n" +
+                       "- At least one digit\n" +
+                       "- At least one symbol (@$!%*?&)")
     private String gpass;
 
     @OneToMany(mappedBy = "guest")
