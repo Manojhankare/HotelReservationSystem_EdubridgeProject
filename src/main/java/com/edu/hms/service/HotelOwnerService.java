@@ -1,25 +1,20 @@
 package com.edu.hms.service;
 
 import java.util.List;
-
-//import org.springframework.stereotype.Service;
-
 import com.edu.hms.entity.HotelOwner;
 
 public interface HotelOwnerService {
 
-	HotelOwner savehotelOwner(HotelOwner hotelOwner);
+    HotelOwner saveHotelOwner(HotelOwner hotelOwner);
 
-	List<HotelOwner> getAllHotelOwners();
+    List<HotelOwner> getAllHotelOwners();
 
-	HotelOwner getHotelOwnerById(Integer ownerId);
+    HotelOwner getHotelOwnerById(Integer ownerId);
 
-	HotelOwner updateHotelOwner(Integer ownerId, HotelOwner updatedHotelOwner);
+    HotelOwner updateHotelOwner(Integer ownerId, HotelOwner updatedHotelOwner);
 
-	void deleteHotelOwner(Integer ownerId);
+    void deleteHotelOwner(Integer ownerId);
 
-
-
-//	List<HotelOwner> searchHotelOwners(String ownerName, String ownerEmail, String ownerContactNumber);
-
+    List<HotelOwner> searchHotelOwners(String ownerName, String ownerEmail, String contactNumber);
 }
+

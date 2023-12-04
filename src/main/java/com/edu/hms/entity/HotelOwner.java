@@ -54,7 +54,6 @@ public class HotelOwner {
 
 	public HotelOwner() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public HotelOwner(Long ownerId, String ownerName, String ownerEmail, String OwnerContactNumber,
