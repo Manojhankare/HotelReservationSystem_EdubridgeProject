@@ -1,5 +1,7 @@
 package com.edu.hms.entity;
 
+import java.util.Arrays;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -40,6 +42,9 @@ public class Hotel {
 	@NotBlank(message = "City should not be blank")
 	@Size(max = 55, message = "City name should not exceed 55 characters")
 	private String hcity;
+	
+	@Column(name="Services")
+	private String[] hservices;
 	
 	@Column
 	private String imgUrl;
@@ -118,10 +123,20 @@ public class Hotel {
 		this.hotelOwner = hotelOwner;
 	}
 
+	public String[] getHservices() {
+		return hservices;
+	}
+
+	public void setHservices(String[] hservices) {
+		this.hservices = hservices;
+	}
+
 	@Override
 	public String toString() {
 		return "Hotel [hId=" + hId + ", hname=" + hname + ", hemail=" + hemail + ", hno=" + hno + ", hadd=" + hadd
-				+ ", hcity=" + hcity + ", hotelOwner=" + hotelOwner + "]";
+				+ ", hcity=" + hcity + ", hservices=" + Arrays.toString(hservices) + ", imgUrl=" + imgUrl
+				+ ", hotelOwner=" + hotelOwner + "]";
 	}
+	
 
 }
