@@ -1,7 +1,5 @@
 package com.edu.hms.entity;
 
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,7 +7,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 @Entity
 public class Room {
@@ -18,34 +15,44 @@ public class Room {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int rId;
 
-	@Column
-	private int RoomNo;
+	@Column(name = "roomNumber", nullable = false, unique = true)
+	private int roomNo;
 
 	@Column(name = "RoomType", nullable = false, length = 20)
-	private String roomtype;
-	@Column(name = "RoomPrice", nullable = false, length = 20)
-	private double roomprice;
+	private String roomType;/// mention in frontend i.e. Double, Single, Suite, Bunglow..
+
+	@Column(name = "RoomPrice", nullable = false)
+	private double roomPrice;
+
+	@Column(nullable = false)
+	private int capacityAdults;
+
+	@Column(nullable = false)
+	private int capacityChildren;
 
 	@ManyToOne
 	@JoinColumn(name = "hId")
 	private Hotel hotel;
 
-	@OneToMany(mappedBy = "room")
-	private List<Reservations> reservations;
+	@ManyToOne
+	@JoinColumn(name = "reservationID")
+	private Reservations reservation;
 
 	public Room() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
-	public Room(int rId, int roomNo, String roomtype, double roomprice, Hotel hotel, List<Reservations> reservations) {
+	public Room(int rId, int roomNo, String roomType, double roomPrice, int capacityAdults, int capacityChildren,
+			Hotel hotel, Reservations reservation) {
 		super();
 		this.rId = rId;
-		RoomNo = roomNo;
-		this.roomtype = roomtype;
-		this.roomprice = roomprice;
+		this.roomNo = roomNo;
+		this.roomType = roomType;
+		this.roomPrice = roomPrice;
+		this.capacityAdults = capacityAdults;
+		this.capacityChildren = capacityChildren;
 		this.hotel = hotel;
-		this.reservations = reservations;
+		this.reservation = reservation;
 	}
 
 	public int getrId() {
@@ -56,20 +63,44 @@ public class Room {
 		this.rId = rId;
 	}
 
-	public String getRoomtype() {
-		return roomtype;
+	public int getRoomNo() {
+		return roomNo;
 	}
 
-	public void setRoomtype(String roomtype) {
-		this.roomtype = roomtype;
+	public void setRoomNo(int roomNo) {
+		this.roomNo = roomNo;
 	}
 
-	public double getRoomprice() {
-		return roomprice;
+	public String getRoomType() {
+		return roomType;
 	}
 
-	public void setRoomprice(double roomprice) {
-		this.roomprice = roomprice;
+	public void setRoomType(String roomType) {
+		this.roomType = roomType;
+	}
+
+	public double getRoomPrice() {
+		return roomPrice;
+	}
+
+	public void setRoomPrice(double roomPrice) {
+		this.roomPrice = roomPrice;
+	}
+
+	public int getCapacityAdults() {
+		return capacityAdults;
+	}
+
+	public void setCapacityAdults(int capacityAdults) {
+		this.capacityAdults = capacityAdults;
+	}
+
+	public int getCapacityChildren() {
+		return capacityChildren;
+	}
+
+	public void setCapacityChildren(int capacityChildren) {
+		this.capacityChildren = capacityChildren;
 	}
 
 	public Hotel getHotel() {
@@ -80,26 +111,19 @@ public class Room {
 		this.hotel = hotel;
 	}
 
-	public List<Reservations> getReservations() {
-		return reservations;
+	public Reservations getReservation() {
+		return reservation;
 	}
 
-	public void setReservations(List<Reservations> reservations) {
-		this.reservations = reservations;
-	}
-
-	public int getRoomNo() {
-		return RoomNo;
-	}
-
-	public void setRoomNo(int roomNo) {
-		RoomNo = roomNo;
+	public void setReservation(Reservations reservation) {
+		this.reservation = reservation;
 	}
 
 	@Override
 	public String toString() {
-		return "Room [rId=" + rId + ", RoomNo=" + RoomNo + ", roomtype=" + roomtype + ", roomprice=" + roomprice
-				+ ", hotel=" + hotel + ", reservations=" + reservations + "]";
+		return "Room [rId=" + rId + ", roomNo=" + roomNo + ", roomType=" + roomType + ", roomPrice=" + roomPrice
+				+ ", capacityAdults=" + capacityAdults + ", capacityChildren=" + capacityChildren + ", hotel=" + hotel
+				+ ", reservation=" + reservation + "]";
 	}
 
 }

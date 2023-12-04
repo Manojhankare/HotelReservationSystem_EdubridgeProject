@@ -2,20 +2,31 @@ package com.edu.hms.service;
  
 import java.util.List;
 
+import javax.validation.Valid;
+
 import com.edu.hms.entity.Hotel;
-import com.edu.hms.exceptions.HotelNotFoundException;
+import com.edu.hms.exceptions.GlobalException;
+ 
  
 public interface HotelService {
 
-	Hotel saveHotel(Hotel hotel);
+	Hotel saveHotel(@Valid Hotel hotel);
 
-	List<Hotel> getallhotel();
+	List<Hotel> getAllHotels();
 
-	Hotel getHotelById(int hotelId) throws HotelNotFoundException;
+	Hotel getHotelById(int hId) throws GlobalException;
 
-	Hotel updateHotel(int hotelId, Hotel updatedHotel);
+	Hotel updateHotel(int hId, @Valid Hotel updatedHotel) throws GlobalException;
 
-	List<Hotel> searchHotels(String city, String name);
+	void deleteHotel(int hId) throws GlobalException;
 
+	List<Hotel> searchByName(String name);
 
+	List<Hotel> searchByCity(String city);
+
+	List<Hotel> searchByOwner(int ownerId);
+
+	List<Hotel> searchByContactNo(int hno);
+
+ 
 }

@@ -1,7 +1,5 @@
 package com.edu.hms.entity;
-
-import java.util.Arrays;
-
+ 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -42,28 +40,30 @@ public class Hotel {
 	@NotBlank(message = "City should not be blank")
 	@Size(max = 55, message = "City name should not exceed 55 characters")
 	private String hcity;
-	
-	@Column(name="Services")
-	private String[] hservices;
-	
+
+	@Column(name = "services", length = 255)
+	private String hServices;
+
 	@Column
-	private String imgUrl;
+	private String hImgUrl;// storing url of image of hotel..
 
 	@ManyToOne
 	private HotelOwner hotelOwner;
 
 	public Hotel() {
-		super();
-		// TODO Auto-generated constructor stub
+		super(); 
 	}
 
-	public Hotel(String hname, String hemail, int hno, String hadd, String hcity, HotelOwner hotelOwner) {
+	public Hotel(String hname, String hemail, int hno, String hadd, String hcity, String hServices, String hImgUrl,
+			HotelOwner hotelOwner) {
 		super();
 		this.hname = hname;
 		this.hemail = hemail;
 		this.hno = hno;
 		this.hadd = hadd;
 		this.hcity = hcity;
+		this.hServices = hServices;
+		this.hImgUrl = hImgUrl;
 		this.hotelOwner = hotelOwner;
 	}
 
@@ -123,20 +123,27 @@ public class Hotel {
 		this.hotelOwner = hotelOwner;
 	}
 
-	public String[] getHservices() {
-		return hservices;
+	public String gethServices() {
+		return hServices;
 	}
 
-	public void setHservices(String[] hservices) {
-		this.hservices = hservices;
+	public void sethServices(String hServices) {
+		this.hServices = hServices;
+	}
+
+	public String gethImgUrl() {
+		return hImgUrl;
+	}
+
+	public void sethImgUrl(String hImgUrl) {
+		this.hImgUrl = hImgUrl;
 	}
 
 	@Override
 	public String toString() {
 		return "Hotel [hId=" + hId + ", hname=" + hname + ", hemail=" + hemail + ", hno=" + hno + ", hadd=" + hadd
-				+ ", hcity=" + hcity + ", hservices=" + Arrays.toString(hservices) + ", imgUrl=" + imgUrl
-				+ ", hotelOwner=" + hotelOwner + "]";
+				+ ", hcity=" + hcity + ", hServices=" + hServices + ", hImgUrl=" + hImgUrl + ", hotelOwner="
+				+ hotelOwner + "]";
 	}
-	
 
 }
