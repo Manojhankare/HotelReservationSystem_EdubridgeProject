@@ -74,4 +74,20 @@ public class HotelOwnerServiceImpl implements HotelOwnerService {
 
         return Example.of(searchCriteria, matcher);
     }
+    
+    public boolean isEmailUnique(String email) {
+        // Check if email is unique in the repository
+        return !hotelOwnerRepository.existsByOwnerEmail(email);
+    }
+
+    public boolean isContactNumberUnique(String contactNumber) {
+        // Check if contact number is unique in the repository
+        return !hotelOwnerRepository.existsByOwnerContactNumber(contactNumber);
+    }
+
+	@Override
+	public boolean isUsernameUnique(String username) {
+		
+		return !hotelOwnerRepository.existsByOwnerUsername(username);
+	}
 } 

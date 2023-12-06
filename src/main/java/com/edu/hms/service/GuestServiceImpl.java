@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.edu.hms.entity.Guest;
-import com.edu.hms.exceptions.GuestNotFoundException;
+import com.edu.hms.exceptions.GlobalException;
 import com.edu.hms.repository.GuestRepository;
 
 @Service
@@ -17,7 +17,7 @@ public class GuestServiceImpl implements GuestService {
 	private GuestRepository guestRepository;
 
 	@Override
-	public Guest saveGuest(Guest guest) {
+	public Guest saveGuest(Guest guest)  {
 		// TODO Auto-generated method stub
 		return guestRepository.save(guest);
 	}
@@ -35,60 +35,98 @@ public class GuestServiceImpl implements GuestService {
 	}
 
 	@Override
-	public Guest updateName(Integer guestId, String newName) throws GuestNotFoundException {
+	public Guest updateName(Integer guestId, String newName) throws GlobalException {
 		Optional<Guest> guestOptional = guestRepository.findById(guestId);
 		if (guestOptional.isPresent()) {
 			Guest guest = guestOptional.get();
-			guest.setGname(newName);
+			guest.setGuestName(newName);
 			return guestRepository.save(guest);
 		} else {
-			throw new GuestNotFoundException("Guest with ID " + guestId + " not found.");
+			throw new GlobalException("Guest with ID " + guestId + " not found.");
 		}
 	}
 
 	@Override
-	public Guest updateEmail(Integer guestId, String newEmail) throws GuestNotFoundException {
+	public Guest updateEmail(Integer guestId, String newEmail) throws GlobalException {
 		Optional<Guest> guestOptional = guestRepository.findById(guestId);
 		if (guestOptional.isPresent()) {
 			Guest guest = guestOptional.get();
-			guest.setGemail(newEmail);
+			guest.setGuestEmail(newEmail);
 			return guestRepository.save(guest);
 		} else {
-			throw new GuestNotFoundException("Guest with ID " + guestId + " not found.");
+			throw new GlobalException("Guest with ID " + guestId + " not found.");
 		}
 	}
 
 	@Override
-	public Guest updatePhone(Integer guestId, String newPhone) throws GuestNotFoundException {
+	public Guest updatePhone(Integer guestId, String newPhone) throws GlobalException {
 		Optional<Guest> guestOptional = guestRepository.findById(guestId);
 		if (guestOptional.isPresent()) {
 			Guest guest = guestOptional.get();
-			guest.setGno(newPhone);
+			guest.setGuestContactNo(newPhone);
 			return guestRepository.save(guest);
 		} else {
-			throw new GuestNotFoundException("Guest with ID " + guestId + " not found.");
+			throw new GlobalException("Guest with ID " + guestId + " not found.");
 		}
 	}
 
 	@Override
-	public Guest updateAddress(Integer guestId, String newAddress) throws GuestNotFoundException {
+	public Guest updateAddress(Integer guestId, String newAddress) throws GlobalException {
 		Optional<Guest> guestOptional = guestRepository.findById(guestId);
 		if (guestOptional.isPresent()) {
 			Guest guest = guestOptional.get();
-			guest.setGaddress(newAddress);
+			guest.setGuestAddress(newAddress);
 			return guestRepository.save(guest);
 		} else {
-			throw new GuestNotFoundException("Guest with ID " + guestId + " not found.");
+			throw new GlobalException("Guest with ID " + guestId + " not found.");
 		}
 	}
 
 	@Override
-	public void deleteGuest(Integer guestId) throws GuestNotFoundException {
+	public void deleteGuest(Integer guestId) throws GlobalException {
 		Optional<Guest> guestOptional = guestRepository.findById(guestId);
 		if (guestOptional.isPresent()) {
 			guestRepository.deleteById(guestId);
 		} else {
-			throw new GuestNotFoundException("Guest with ID " + guestId + " not found.");
+			throw new GlobalException("Guest with ID " + guestId + " not found.");
+		}
+	}
+
+
+    @Override
+    public boolean isEmailUnique(String gemail) {
+        return !guestRepository.existsByGuestEmail(gemail);
+    }
+
+    @Override
+    public boolean isContactNumberUnique(String gno) {
+        return !guestRepository.existsByGuestContactNo(gno);
+    }
+
+    @Override
+    public boolean isUsernameUnique(String gusername) {
+        return !guestRepository.existsByGuestUsername(gusername);
+    }
+
+	@Override
+	public Guest findbyNamePass(String username, String password) {
+		// TODO Auto-generated method stub
+		
+	        return guestRepository.findByGuestUsernameAndGuestPass(username, password);
+	     
+	}
+
+	@Override
+	public Guest loginGuest(String username, String password) {
+		// TODO Auto-generated method stub
+		
+		Guest guest=guestRepository.findByGuestByUsername(username);
+		if (guest!=null && password.equals(guest.getGuestPass())) {
+			
+			return guest;
+		}
+		else {
+			return null;
 		}
 	}
 }

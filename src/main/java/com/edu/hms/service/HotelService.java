@@ -10,7 +10,7 @@ import com.edu.hms.exceptions.GlobalException;
  
 public interface HotelService {
 
-	Hotel saveHotel(@Valid Hotel hotel);
+	Hotel saveHotel(@Valid Hotel hotel) throws GlobalException;
 
 	List<Hotel> getAllHotels();
 

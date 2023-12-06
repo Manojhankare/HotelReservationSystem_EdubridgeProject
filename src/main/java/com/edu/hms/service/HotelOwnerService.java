@@ -16,5 +16,11 @@ public interface HotelOwnerService {
     void deleteHotelOwner(Integer ownerId);
 
     List<HotelOwner> searchHotelOwners(String ownerName, String ownerEmail, String contactNumber);
+
+	boolean isEmailUnique(String email);
+
+	boolean isContactNumberUnique(String contactNumber);
+
+	boolean isUsernameUnique(String username);
 }
 
