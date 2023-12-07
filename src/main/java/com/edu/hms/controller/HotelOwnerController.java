@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.edu.hms.entity.HotelOwner;
 import com.edu.hms.service.HotelOwnerService;
 
+
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class HotelOwnerController {
@@ -65,6 +66,22 @@ public class HotelOwnerController {
 			@RequestParam(name = "contactNumber", required = false) String contactNumber) {
 		return hotelOwnerService.searchHotelOwners(ownerName, ownerEmail, contactNumber);
 	}
+	 @GetMapping("/hotelOwner/checkUniqueEmail/{email}")
+	    public ResponseEntity<Boolean> checkUniqueEmail(@PathVariable String email) {
+	        boolean isUnique = hotelOwnerService.isEmailUnique(email);
+	        return new ResponseEntity<>(isUnique, HttpStatus.OK);
+	    }
+
+	    @GetMapping("/hotelOwner/checkUniqueContactNumber/{contactNumber}")
+	    public ResponseEntity<Boolean> checkUniqueContactNumber(@PathVariable String contactNumber) {
+	        boolean isUnique = hotelOwnerService.isContactNumberUnique(contactNumber);
+	        return new ResponseEntity<>(isUnique, HttpStatus.OK);
+	    }
+	    @GetMapping("/hotelOwner/checkUniqueUsername/{username}")
+	    public ResponseEntity<Boolean> checkUniqueUsername(@PathVariable String username) {
+	        boolean isUnique = hotelOwnerService.isUsernameUnique(username);
+	        return new ResponseEntity<>(isUnique, HttpStatus.OK);
+	    }
 
 	 
 }

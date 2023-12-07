@@ -18,7 +18,7 @@ public class HotelOwner {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long ownerId;
+	private int ownerId;
 
 	@Column(name = "OwnerName", nullable = false)
 	@NotBlank(message = "Owner name should not be blank")
@@ -31,16 +31,16 @@ public class HotelOwner {
 	@Size(max = 255, message = "Owner email should not exceed 255 characters")
 	private String ownerEmail;
 
-	@Column(name = "ContactNumber", nullable = false)
+	@Column(name = "OwnerContactNumber", nullable = false)
 	@NotBlank(message = "Contact number should not be blank")
-	@Size(max = 15, message = "Contact number should not exceed 15 characters")
+	@Size(max = 10, message = "Contact number should not exceed 10 characters")
 	@Pattern(regexp = "^[0-9]*$", message = "Contact number should only contain digits")
-	private String OwnerContactNumber;
+	private String ownerContactNumber;
 
 	@Column(name = "Username", nullable = false, unique = true)
 	@NotBlank(message = "Username should not be blank")
 	@Size(max = 50, message = "Username should not exceed 50 characters")
-	private String OwnerUsername;
+	private String ownerUsername;
 
 	@Column(name = "Password", nullable = false)
 	@NotBlank(message = "Password should not be blank")
@@ -56,23 +56,23 @@ public class HotelOwner {
 		super();
 	}
 
-	public HotelOwner(Long ownerId, String ownerName, String ownerEmail, String OwnerContactNumber,
-			String OwnerUsername, String password, List<Hotel> hotel) {
+	public HotelOwner(int ownerId, String ownerName, String ownerEmail, String ownerContactNumber, String ownerUsername,
+			String password, List<Hotel> hotel) {
 		super();
 		this.ownerId = ownerId;
 		this.ownerName = ownerName;
 		this.ownerEmail = ownerEmail;
-		this.OwnerContactNumber = OwnerContactNumber;
-		this.OwnerUsername = OwnerUsername;
+		this.ownerContactNumber = ownerContactNumber;
+		this.ownerUsername = ownerUsername;
 		this.password = password;
 		this.hotel = hotel;
 	}
 
-	public Long getOwnerId() {
+	public int getOwnerId() {
 		return ownerId;
 	}
 
-	public void setOwnerId(Long ownerId) {
+	public void setOwnerId(int ownerId) {
 		this.ownerId = ownerId;
 	}
 
@@ -93,19 +93,19 @@ public class HotelOwner {
 	}
 
 	public String getOwnerContactNumber() {
-		return OwnerContactNumber;
+		return ownerContactNumber;
 	}
 
 	public void setOwnerContactNumber(String ownerContactNumber) {
-		OwnerContactNumber = ownerContactNumber;
+		this.ownerContactNumber = ownerContactNumber;
 	}
 
 	public String getOwnerUsername() {
-		return OwnerUsername;
+		return ownerUsername;
 	}
 
 	public void setOwnerUsername(String ownerUsername) {
-		OwnerUsername = ownerUsername;
+		this.ownerUsername = ownerUsername;
 	}
 
 	public String getPassword() {
@@ -127,7 +127,8 @@ public class HotelOwner {
 	@Override
 	public String toString() {
 		return "HotelOwner [ownerId=" + ownerId + ", ownerName=" + ownerName + ", ownerEmail=" + ownerEmail
-				+ ", OwnerContactNumber=" + OwnerContactNumber + ", OwnerUsername=" + OwnerUsername + ", password="
+				+ ", ownerContactNumber=" + ownerContactNumber + ", ownerUsername=" + ownerUsername + ", password="
 				+ password + ", hotel=" + hotel + "]";
 	}
+
 }

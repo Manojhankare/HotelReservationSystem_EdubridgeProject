@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,7 @@ import com.edu.hms.entity.Hotel;
 import com.edu.hms.exceptions.GlobalException;
 import com.edu.hms.service.HotelService;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class HotelController {
  
@@ -26,10 +28,12 @@ public class HotelController {
 	private HotelService hotelService;
 
 	@PostMapping("/hotels/savehotel")
-	public ResponseEntity<Hotel> saveHotel(@Valid @RequestBody Hotel hotel) {
+	public ResponseEntity<Hotel> saveHotel(@Valid @RequestBody Hotel hotel) throws GlobalException {
 		Hotel savedHotel = hotelService.saveHotel(hotel);
+		//update hotelowner id
 		return new ResponseEntity<>(savedHotel, HttpStatus.CREATED);
 	}
+	//
 
 	@GetMapping("/hotels/getAll")
 	public ResponseEntity<List<Hotel>> getAllHotels() {
@@ -42,16 +46,18 @@ public class HotelController {
 		Hotel hotel = hotelService.getHotelById(hId);
 		return new ResponseEntity<>(hotel, HttpStatus.OK);
 	}
+	
+	
 
-	@PutMapping("/hotels/update/{hId}")
-	public ResponseEntity<Hotel> updateHotel(@PathVariable("hId") int hId, @Valid @RequestBody Hotel updatedHotel) throws GlobalException {
-		Hotel updated = hotelService.updateHotel(hId, updatedHotel);
+	@PutMapping("/hotels/update/{hotelId}")
+	public ResponseEntity<Hotel> updateHotel(@PathVariable("hotelId") int hotelId, @Valid @RequestBody Hotel updatedHotel) throws GlobalException {
+		Hotel updated = hotelService.updateHotel(hotelId, updatedHotel);
 		return new ResponseEntity<>(updated, HttpStatus.OK);
 	}
 
-	@DeleteMapping("/hotels/delete/{hId}")
-	public ResponseEntity<Void> deleteHotel(@PathVariable("hId") int hId) throws GlobalException {
-		hotelService.deleteHotel(hId);
+	@DeleteMapping("/hotels/delete/{hotelId}")
+	public ResponseEntity<Void> deleteHotel(@PathVariable("hotelId") int hotelId) throws GlobalException {
+		hotelService.deleteHotel(hotelId);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 

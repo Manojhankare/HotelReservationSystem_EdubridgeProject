@@ -18,63 +18,65 @@ public class HotelServiceImpl implements HotelService {
 	@Autowired
 	private HotelRepository hotelRepository;
 
-    
-    @Override
-    public Hotel saveHotel(@Valid Hotel hotel) {
-        return hotelRepository.save(hotel);
-    }
+	@Override
+	public Hotel saveHotel(@Valid Hotel hotel) throws GlobalException {
+		if (hotel.getHotelName() == null || hotel.getHotelName().isEmpty()) {
+			throw new GlobalException("Hotel name cannot be empty");
+		}
 
-    @Override
-    public List<Hotel> getAllHotels() {
-        return hotelRepository.findAll();
-    }
+		return hotelRepository.save(hotel);
+	}
 
-    @Override
-    public Hotel getHotelById(int hId) throws GlobalException {
-        Optional<Hotel> optionalHotel = hotelRepository.findById(hId);
-        return optionalHotel.orElseThrow(() -> new GlobalException("Hotel not found with ID: " + hId));
-    }
+	@Override
+	public List<Hotel> getAllHotels() {
+		return hotelRepository.findAll();
+	}
 
-    @Override
-    public Hotel updateHotel(int hId, @Valid Hotel updatedHotel) throws GlobalException {
-        Optional<Hotel> optionalHotel = hotelRepository.findById(hId);
+	@Override
+	public Hotel getHotelById(int hotelId) throws GlobalException {
+		Optional<Hotel> optionalHotel = hotelRepository.findById(hotelId);
+		return optionalHotel.orElseThrow(() -> new GlobalException("Hotel not found with ID: " + hotelId));
+	}
 
-        if (optionalHotel.isPresent()) {
-            updatedHotel.sethId(hId);
-            return hotelRepository.save(updatedHotel);
-        } else {
-            throw new GlobalException("Hotel not found with ID: " + hId);
-        }
-    }
+	@Override
+	public Hotel updateHotel(int hId, @Valid Hotel updatedHotel) throws GlobalException {
+		Optional<Hotel> optionalHotel = hotelRepository.findById(hId);
 
-    @Override
-    public void deleteHotel(int hId) throws GlobalException {
-        // Check if the hotel with the given ID exists
-        if (hotelRepository.existsById(hId)) {
-            hotelRepository.deleteById(hId);
-        } else {
-            throw new GlobalException("Hotel not found with ID: " + hId);
-        }
-    }
+		if (optionalHotel.isPresent()) {
+			updatedHotel.setHotelId(hId);
+			return hotelRepository.save(updatedHotel);
+		} else {
+			throw new GlobalException("Hotel not found with ID: " + hId);
+		}
+	}
 
-    @Override
-    public List<Hotel> searchByName(String name) {
-        return hotelRepository.findByHnameContaining(name);
-    }
-    
-    @Override
-    public List<Hotel>searchByContactNo(int hno){
-    	return hotelRepository.findByHno(hno);
-    }
+	@Override
+	public void deleteHotel(int hotelId) throws GlobalException {
+		// Check if the hotel with the given ID exists
+		if (hotelRepository.existsById(hotelId)) {
+			hotelRepository.deleteById(hotelId);
+		} else {
+			throw new GlobalException("Hotel not found with ID: " + hotelId);
+		}
+	}
 
-    @Override
-    public List<Hotel> searchByCity(String city) {
-        return hotelRepository.findByHcity(city);
-    }
+	@Override
+	public List<Hotel> searchByName(String name) {
+		return hotelRepository.findByHotelNameContaining(name);
+	}
 
-    @Override
-    public List<Hotel> searchByOwner(int ownerId) {
-        return hotelRepository.findByHotelOwnerOwnerId(ownerId);
-    }
+	@Override
+	public List<Hotel> searchByContactNo(int hotelContactNo) {
+		return hotelRepository.findByHotelContactNo(hotelContactNo);
+	}
+
+	@Override
+	public List<Hotel> searchByCity(String city) {
+		return hotelRepository.findByHotelCity(city);
+	}
+
+	@Override
+	public List<Hotel> searchByOwner(int ownerId) {
+		return hotelRepository.findByHotelOwnerOwnerId(ownerId);
+	}
 }
-

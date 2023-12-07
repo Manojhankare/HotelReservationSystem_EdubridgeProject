@@ -1,5 +1,5 @@
 package com.edu.hms.entity;
- 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,103 +16,120 @@ public class Hotel {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "HotelID")
-	private int hId;
+	private int hotelId;
 
 	@Column(name = "HotelName", nullable = false, length = 55)
 	@NotBlank(message = "Hotel name should not be blank")
 	@Size(max = 55, message = "Hotel name should not exceed 55 characters")
-	private String hname;
+	private String hotelName;
 
 	@Column(name = "Email", nullable = false, length = 55)
 	@Email(message = "Invalid email format")
-	private String hemail;
+	private String hotelEmail;
 
-	@Column(name = "ContactNo.", nullable = false, length = 10)
+	@Column(name = "ContactNo", nullable = false, length = 10)
 	@Size(min = 10, max = 10, message = "Contact number should be 10 digits")
-	private int hno;
+	private int hotelContactNo;
 
 	@Column(name = "Address", nullable = false, length = 90)
 	@NotBlank(message = "Hotel address should not be blank")
 	@Size(max = 90, message = "Address should not exceed 90 characters")
-	private String hadd;
+	private String hotelAddress;
 
 	@Column(name = "City", nullable = false, length = 55)
 	@NotBlank(message = "City should not be blank")
 	@Size(max = 55, message = "City name should not exceed 55 characters")
-	private String hcity;
+	private String hotelCity;
 
 	@Column(name = "services", length = 255)
-	private String hServices;
+	private String hotelServices;
 
 	@Column
-	private String hImgUrl;// storing url of image of hotel..
+	private String hotelImgUrl;// storing url of image of hotel..
 
 	@ManyToOne
 	private HotelOwner hotelOwner;
 
 	public Hotel() {
-		super(); 
+		super();
 	}
 
-	public Hotel(String hname, String hemail, int hno, String hadd, String hcity, String hServices, String hImgUrl,
-			HotelOwner hotelOwner) {
+	public Hotel( String hotelName, String hotelEmail, int hotelContactNo, String hotelAddress,
+			String hotelCity, String hotelServices, String hotelImgUrl, HotelOwner hotelOwner) {
 		super();
-		this.hname = hname;
-		this.hemail = hemail;
-		this.hno = hno;
-		this.hadd = hadd;
-		this.hcity = hcity;
-		this.hServices = hServices;
-		this.hImgUrl = hImgUrl;
+		 
+		this.hotelName = hotelName;
+		this.hotelEmail = hotelEmail;
+		this.hotelContactNo = hotelContactNo;
+		this.hotelAddress = hotelAddress;
+		this.hotelCity = hotelCity;
+		this.hotelServices = hotelServices;
+		this.hotelImgUrl = hotelImgUrl;
 		this.hotelOwner = hotelOwner;
 	}
 
-	public int gethId() {
-		return hId;
+	public int getHotelId() {
+		return hotelId;
 	}
 
-	public void sethId(int hId) {
-		this.hId = hId;
+	public void setHotelId(int hotelId) {
+		this.hotelId = hotelId;
 	}
 
-	public String getHname() {
-		return hname;
+	public String getHotelName() {
+		return hotelName;
 	}
 
-	public void setHname(String hname) {
-		this.hname = hname;
+	public void setHotelName(String hotelName) {
+		this.hotelName = hotelName;
 	}
 
-	public String getHemail() {
-		return hemail;
+	public String getHotelEmail() {
+		return hotelEmail;
 	}
 
-	public void setHemail(String hemail) {
-		this.hemail = hemail;
+	public void setHotelEmail(String hotelEmail) {
+		this.hotelEmail = hotelEmail;
 	}
 
-	public int getHno() {
-		return hno;
+	public int getHotelContactNo() {
+		return hotelContactNo;
 	}
 
-	public void setHno(int hno) {
-		this.hno = hno;
+	public void setHotelContactNo(int hotelContactNo) {
+		this.hotelContactNo = hotelContactNo;
 	}
 
-	public String getHadd() {
-		return hadd;
+	public String getHotelAddress() {
+		return hotelAddress;
 	}
 
-	public void setHadd(String hadd) {
-		this.hadd = hadd;
+	public void setHotelAddress(String hotelAddress) {
+		this.hotelAddress = hotelAddress;
 	}
 
-	public String getHcity() {
-		return hcity;
+	public String getHotelCity() {
+		return hotelCity;
 	}
 
-	public void setHcity(String hcity) {
-		this.hcity = hcity;
+	public void setHotelCity(String hotelCity) {
+		this.hotelCity = hotelCity;
+	}
+
+	public String getHotelServices() {
+		return hotelServices;
+	}
+
+	public void setHotelServices(String hotelServices) {
+		this.hotelServices = hotelServices;
+	}
+
+	public String getHotelImgUrl() {
+		return hotelImgUrl;
+	}
+
+	public void setHotelImgUrl(String hotelImgUrl) {
+		this.hotelImgUrl = hotelImgUrl;
 	}
 
 	public HotelOwner getHotelOwner() {
@@ -123,27 +140,13 @@ public class Hotel {
 		this.hotelOwner = hotelOwner;
 	}
 
-	public String gethServices() {
-		return hServices;
-	}
-
-	public void sethServices(String hServices) {
-		this.hServices = hServices;
-	}
-
-	public String gethImgUrl() {
-		return hImgUrl;
-	}
-
-	public void sethImgUrl(String hImgUrl) {
-		this.hImgUrl = hImgUrl;
-	}
-
 	@Override
 	public String toString() {
-		return "Hotel [hId=" + hId + ", hname=" + hname + ", hemail=" + hemail + ", hno=" + hno + ", hadd=" + hadd
-				+ ", hcity=" + hcity + ", hServices=" + hServices + ", hImgUrl=" + hImgUrl + ", hotelOwner="
-				+ hotelOwner + "]";
+		return "Hotel [hotelId=" + hotelId + ", hotelName=" + hotelName + ", hotelEmail=" + hotelEmail
+				+ ", hotelContactNo=" + hotelContactNo + ", hotelAddress=" + hotelAddress + ", hotelCity=" + hotelCity
+				+ ", hotelServices=" + hotelServices + ", hotelImgUrl=" + hotelImgUrl + ", hotelOwner=" + hotelOwner
+				+ "]";
 	}
-
+	
+		
 }

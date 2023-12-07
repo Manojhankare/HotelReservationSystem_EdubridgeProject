@@ -10,17 +10,17 @@ import com.edu.hms.entity.Hotel;
 @Repository
 public interface HotelRepository extends JpaRepository<Hotel, Integer>{
 
-	List<Hotel> findByHcityAndHname(String city, String name);
+	List<Hotel> findByHotelCityAndHotelName(String city, String name);
 
-	List<Hotel> findByHcity(String city);
+	List<Hotel> findByHotelCity(String city);
 
-	List<Hotel> findByHname(String name);
+	List<Hotel> findByHotelName(String name);
 
 	List<Hotel> findByHotelOwnerOwnerId(int ownerId);
 
-	List<Hotel> findByHnameContaining(String name);
+	List<Hotel> findByHotelNameContaining(String name);
 
-	List<Hotel> findByHno(int hno);
+	List<Hotel> findByHotelContactNo(int hotelContactNo);
 //	
 //	  @Query("SELECT h FROM Hotel h WHERE h.hcity = :city AND h.hname = :name")
 //	    List<Hotel> findByCityAndName(@Param("city") String city, @Param("name") String name);

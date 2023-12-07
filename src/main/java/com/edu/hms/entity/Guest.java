@@ -17,70 +17,67 @@ import javax.validation.constraints.Size;
 @Entity
 public class Guest {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int guestId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int guestId;
 
-    @Column(name = "GuestName", nullable = false, length = 25)
-    @NotBlank(message = "Name should not be null!!!")
-    private String gname;
+	@Column(name = "GuestName", nullable = false, length = 25)
+	@NotBlank(message = "Name should not be null!!!")
+	private String guestName;
 
-    @Column(name = "Age", nullable = false)
-    @Min(value = 18, message = "Age should be at least 18")
-    @Max(value = 80, message = "Age should not exceed 80")
-    private int gage;
+	@Column(name = "Age", nullable = false)
+	@Min(value = 18, message = "Age should be at least 18")
+	@Max(value = 80, message = "Age should not exceed 80")
+	private int guestAge;
 
-    @Column(name = "GuestEmail", nullable = false, unique = true)
-    @NotBlank(message = "Email Should not be null!!!")
-    @Email(message = "Invalid email format")
-    private String gemail;
+	@Column(name = "GuestEmail", nullable = false, unique = true)
+	@NotBlank(message = "Email Should not be null!!!")
+	@Email(message = "Invalid email format")
+	private String guestEmail;
 
-    @Column(name = "Contact_number", nullable = false, unique = true)
-    @NotBlank(message = "Contact Number Should not be null!!!")
-    @Size(max = 10, message = "Contact number should not exceed 10 characters")
-    @Pattern(regexp = "^[0-9]*$", message = "Contact number should only contain digits")
-    private String gno;
+	@Column(name = "Contact_number", nullable = false, unique = true)
+	@NotBlank(message = "Contact Number Should not be null!!!")
+	@Size(max = 10, message = "Contact number should not exceed 10 characters")
+	@Pattern(regexp = "^[0-9]*$", message = "Contact number should only contain digits")
+	private String guestContactNo;
 
-    @Column(name = "Address", nullable = false)
-    @NotBlank(message = "Address should not be null!!!")
-    @Size(max = 255, message = "Address should not exceed 255 characters")
-    private String gaddress;
+	@Column(name = "Address", nullable = false)
+	@NotBlank(message = "Address should not be null!!!")
+	@Size(max = 255, message = "Address should not exceed 255 characters")
+	private String guestAddress;
 
-    @Column(name = "Username", nullable = false, unique = true)
-    @NotBlank(message = "Username should not be null!!!")
-    @Size(max = 10, message = "Username should not exceed 10 characters")
-    private String gusername;
-    
-    
-    //password validations
-    @Column(name = "Pass", nullable = false)
-    @NotBlank(message = "Password should not be null or empty.")
-    @Pattern(regexp = "^(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$",
-             message = "Invalid password. It must meet the following criteria:\n" +
-                       "- At least 8 characters long\n" +
-                       "- At least one uppercase letter\n" +
-                       "- At least one digit\n" +
-                       "- At least one symbol (@$!%*?&)")
-    private String gpass;
+	@Column(name = "Username", nullable = false, unique = true)
+	@NotBlank(message = "Username should not be null!!!")
+	@Size(max = 10, message = "Username should not exceed 10 characters")
+	private String guestUsername;
 
-    @OneToMany(mappedBy = "guest")
-    private List<Reservations> reservations;
-    
+	// password validations
+	@Column(name = "Pass", nullable = false)
+	@NotBlank(message = "Password should not be null or empty.")
+	@Pattern(regexp = "^(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$", message = "Invalid password. It must meet the following criteria:\n"
+			+ "- At least 8 characters long\n" + "- At least one uppercase letter\n" + "- At least one digit\n"
+			+ "- At least one symbol (@$!%*?&)")
+	private String guestPass;
+
+	@OneToMany(mappedBy = "guest")
+	private List<Reservations> reservations;
+
 	public Guest() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Guest(String gname,int gage, String gemail, String gno, String gaddress, String gusername, String gpass,
-			List<Reservations> reservations) {
+	public Guest(String guestName, int guestAge, String guestEmail, String guestContactNo, String guestAddress,
+			String guestUsername, String guestPass, List<Reservations> reservations) {
 		super();
-		this.gname = gname;
-		this.gage = gage;
-		this.gemail = gemail;
-		this.gno = gno;
-		this.gaddress = gaddress;
-		this.gusername = gusername;
-		this.gpass = gpass;
+
+		this.guestName = guestName;
+		this.guestAge = guestAge;
+		this.guestEmail = guestEmail;
+		this.guestContactNo = guestContactNo;
+		this.guestAddress = guestAddress;
+		this.guestUsername = guestUsername;
+		this.guestPass = guestPass;
 		this.reservations = reservations;
 	}
 
@@ -92,61 +89,60 @@ public class Guest {
 		this.guestId = guestId;
 	}
 
-	public String getGname() {
-		return gname;
+	public String getGuestName() {
+		return guestName;
 	}
 
-	public void setGname(String gname) {
-		this.gname = gname;
-	}
-	
-
-	public int getGage() {
-		return gage;
+	public void setGuestName(String guestName) {
+		this.guestName = guestName;
 	}
 
-	public void setGage(int gage) {
-		this.gage = gage;
+	public int getGuestAge() {
+		return guestAge;
 	}
 
-	public String getGemail() {
-		return gemail;
+	public void setGuestAge(int guestAge) {
+		this.guestAge = guestAge;
 	}
 
-	public void setGemail(String gemail) {
-		this.gemail = gemail;
+	public String getGuestEmail() {
+		return guestEmail;
 	}
 
-	public String getGno() {
-		return gno;
+	public void setGuestEmail(String guestEmail) {
+		this.guestEmail = guestEmail;
 	}
 
-	public void setGno(String gno) {
-		this.gno = gno;
+	public String getGuestContactNo() {
+		return guestContactNo;
 	}
 
-	public String getGaddress() {
-		return gaddress;
+	public void setGuestContactNo(String guestContactNo) {
+		this.guestContactNo = guestContactNo;
 	}
 
-	public void setGaddress(String gaddress) {
-		this.gaddress = gaddress;
+	public String getGuestAddress() {
+		return guestAddress;
 	}
 
-	public String getGusername() {
-		return gusername;
+	public void setGuestAddress(String guestAddress) {
+		this.guestAddress = guestAddress;
 	}
 
-	public void setGusername(String gusername) {
-		this.gusername = gusername;
+	public String getGuestUsername() {
+		return guestUsername;
 	}
 
-	public String getGpass() {
-		return gpass;
+	public void setGuestUsername(String guestUsername) {
+		this.guestUsername = guestUsername;
 	}
 
-	public void setGpass(String gpass) {
-		this.gpass = gpass;
+	public String getGuestPass() {
+		return guestPass;
+	}
+
+	public void setGuestPass(String guestPass) {
+		this.guestPass = guestPass;
 	}
 
 	public List<Reservations> getReservations() {
@@ -159,10 +155,10 @@ public class Guest {
 
 	@Override
 	public String toString() {
-		return "Guest [guestId=" + guestId + ", gname=" + gname + ", gage=" + gage + ", gemail=" + gemail + ", gno="
-				+ gno + ", gaddress=" + gaddress + ", gusername=" + gusername + ", gpass=" + gpass + ", reservations="
-				+ reservations + "]";
+		return "Guest [guestId=" + guestId + ", guestName=" + guestName + ", guestAge=" + guestAge + ", guestEmail="
+				+ guestEmail + ", guestContactNo=" + guestContactNo + ", guestAddress=" + guestAddress
+				+ ", guestUsername=" + guestUsername + ", guestPass=" + guestPass + ", reservations=" + reservations
+				+ "]";
 	}
-	
 
 }
