@@ -37,12 +37,12 @@ public class HotelOwner {
 	@Pattern(regexp = "^[0-9]*$", message = "Contact number should only contain digits")
 	private String ownerContactNumber;
 
-	@Column(name = "Username", nullable = false, unique = true)
+	@Column(name = "ownerUsername", nullable = false, unique = true)
 	@NotBlank(message = "Username should not be blank")
 	@Size(max = 50, message = "Username should not exceed 50 characters")
 	private String ownerUsername;
 
-	@Column(name = "Password", nullable = false)
+	@Column(name = "ownerPassword", nullable = false)
 	@NotBlank(message = "Password should not be blank")
 	@Pattern(regexp = "^(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$", message = "Invalid password. It must meet the following criteria:\n"
 			+ "- At least 8 characters long\n" + "- At least one uppercase letter\n" + "- At least one digit\n"

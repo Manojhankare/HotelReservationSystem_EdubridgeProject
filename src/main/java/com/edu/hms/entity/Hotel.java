@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -27,9 +28,11 @@ public class Hotel {
 	@Email(message = "Invalid email format")
 	private String hotelEmail;
 
-	@Column(name = "ContactNo", nullable = false, length = 10)
-	@Size(min = 10, max = 10, message = "Contact number should be 10 digits")
-	private int hotelContactNo;
+	@Column(name = "ContactNumber", nullable = false, unique = true)
+	@NotBlank(message = "Contact Number Should not be null!!!")
+	@Size(max = 10, message = "Contact number should not exceed 10 characters")
+	@Pattern(regexp = "^[0-9]*$", message = "Contact number should only contain digits")
+    private String hotelContactNo;
 
 	@Column(name = "Address", nullable = false, length = 90)
 	@NotBlank(message = "Hotel address should not be blank")
@@ -41,8 +44,14 @@ public class Hotel {
 	@Size(max = 55, message = "City name should not exceed 55 characters")
 	private String hotelCity;
 
+	@Column(length = 255, nullable = false)
+	private String hotelDescription;
+
 	@Column(name = "services", length = 255)
 	private String hotelServices;
+
+	@Column(name = "Status", length = 10, nullable = false)
+	private String hotelStatus;
 
 	@Column
 	private String hotelImgUrl;// storing url of image of hotel..
@@ -54,18 +63,21 @@ public class Hotel {
 		super();
 	}
 
-	public Hotel( String hotelName, String hotelEmail, int hotelContactNo, String hotelAddress,
-			String hotelCity, String hotelServices, String hotelImgUrl, HotelOwner hotelOwner) {
+	public Hotel(String hotelName, String hotelEmail, String hotelContactNo, String hotelAddress, String hotelCity,
+			String hotelServices, String hotelStatus, String hotelDescription, String hotelImgUrl,
+			HotelOwner hotelOwner) {
 		super();
-		 
+
 		this.hotelName = hotelName;
 		this.hotelEmail = hotelEmail;
 		this.hotelContactNo = hotelContactNo;
 		this.hotelAddress = hotelAddress;
 		this.hotelCity = hotelCity;
 		this.hotelServices = hotelServices;
+		this.hotelStatus = hotelStatus;
 		this.hotelImgUrl = hotelImgUrl;
 		this.hotelOwner = hotelOwner;
+		this.hotelDescription = hotelDescription;
 	}
 
 	public int getHotelId() {
@@ -92,12 +104,20 @@ public class Hotel {
 		this.hotelEmail = hotelEmail;
 	}
 
-	public int getHotelContactNo() {
+	public String getHotelContactNo() {
 		return hotelContactNo;
 	}
 
-	public void setHotelContactNo(int hotelContactNo) {
+	public void setHotelContactNo(String hotelContactNo) {
 		this.hotelContactNo = hotelContactNo;
+	}
+
+	public String getHotelStatus() {
+		return hotelStatus;
+	}
+
+	public void setHotelStatus(String hotelStatus) {
+		this.hotelStatus = hotelStatus;
 	}
 
 	public String getHotelAddress() {
@@ -114,6 +134,14 @@ public class Hotel {
 
 	public void setHotelCity(String hotelCity) {
 		this.hotelCity = hotelCity;
+	}
+
+	public String getHotelDescription() {
+		return hotelDescription;
+	}
+
+	public void setHotelDescription(String hotelDescription) {
+		this.hotelDescription = hotelDescription;
 	}
 
 	public String getHotelServices() {
@@ -147,6 +175,5 @@ public class Hotel {
 				+ ", hotelServices=" + hotelServices + ", hotelImgUrl=" + hotelImgUrl + ", hotelOwner=" + hotelOwner
 				+ "]";
 	}
-	
-		
+
 }

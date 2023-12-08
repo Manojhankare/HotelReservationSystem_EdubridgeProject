@@ -28,5 +28,12 @@ public interface HotelService {
 
 	List<Hotel> searchByContactNo(int hno);
 
+	Hotel setHotelOwnerToHotel(int hotelId, int ownerId) throws GlobalException;
+
+	List<Hotel> getHotelsByOwnerId(int ownerId);
+	
+//	public Hotel getHotelByOwnerId(int ownerId) throws GlobalException;
+
+
  
 }

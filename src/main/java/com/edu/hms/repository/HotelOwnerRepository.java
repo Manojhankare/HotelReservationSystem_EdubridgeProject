@@ -31,5 +31,12 @@ public interface HotelOwnerRepository extends JpaRepository<HotelOwner, Integer>
 
 	List<HotelOwner> findByOwnerNameAndOwnerEmailAndOwnerContactNumber(String ownerName, String ownerEmail,
 			String ownercontactNumber);
+	
+//	@Query(value = "SELECT * FROM HotelOwner WHERE ownerUsername=?1" , nativeQuery=true)
+//	HotelOwner findByHotelOwnerByOwnerUsername(String username);
+	
+	@Query(value = "SELECT * FROM hotel_owner WHERE owner_username = :username", nativeQuery = true)
+	HotelOwner findByOwnerUsername(@Param("username") String username);
+
 
 }

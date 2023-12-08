@@ -35,7 +35,7 @@ public class Guest {
 	@Email(message = "Invalid email format")
 	private String guestEmail;
 
-	@Column(name = "Contact_number", nullable = false, unique = true)
+	@Column(name = "ContactNumber", nullable = false, unique = true)
 	@NotBlank(message = "Contact Number Should not be null!!!")
 	@Size(max = 10, message = "Contact number should not exceed 10 characters")
 	@Pattern(regexp = "^[0-9]*$", message = "Contact number should only contain digits")

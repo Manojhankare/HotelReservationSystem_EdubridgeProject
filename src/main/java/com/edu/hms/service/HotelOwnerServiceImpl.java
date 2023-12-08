@@ -7,6 +7,7 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
+ 
 import com.edu.hms.entity.HotelOwner;
 import com.edu.hms.repository.HotelOwnerRepository;
 
@@ -24,6 +25,17 @@ public class HotelOwnerServiceImpl implements HotelOwnerService {
     public List<HotelOwner> getAllHotelOwners() {
         return hotelOwnerRepository.findAll();
     }
+    
+    @Override 
+    public HotelOwner loginhotelOwner(String username, String password) {
+        HotelOwner hotelOwner = hotelOwnerRepository.findByOwnerUsername(username);
+        if (hotelOwner != null && password.equals(hotelOwner.getPassword())) {
+            return hotelOwner;
+        } else {
+            return null;
+        }
+    }
+	
 
     @Override
     public HotelOwner getHotelOwnerById(Integer ownerId) {
@@ -90,4 +102,6 @@ public class HotelOwnerServiceImpl implements HotelOwnerService {
 		
 		return !hotelOwnerRepository.existsByOwnerUsername(username);
 	}
+
+	
 } 

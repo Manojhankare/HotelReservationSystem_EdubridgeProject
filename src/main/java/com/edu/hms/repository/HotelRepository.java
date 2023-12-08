@@ -3,6 +3,7 @@ package com.edu.hms.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.edu.hms.entity.Hotel;
@@ -21,6 +22,22 @@ public interface HotelRepository extends JpaRepository<Hotel, Integer>{
 	List<Hotel> findByHotelNameContaining(String name);
 
 	List<Hotel> findByHotelContactNo(int hotelContactNo);
+
+	@Query(value="select * from hotel where hotelOwner=?1", nativeQuery = true)
+	public Hotel findByHotelOwnerId(Integer hotelOwner);
+	
+//	 Optional<Hotel> findByHotelOwnerId(int ownerId);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 //	
 //	  @Query("SELECT h FROM Hotel h WHERE h.hcity = :city AND h.hname = :name")
 //	    List<Hotel> findByCityAndName(@Param("city") String city, @Param("name") String name);
@@ -39,5 +56,9 @@ public interface HotelRepository extends JpaRepository<Hotel, Integer>{
 //
 //	    @Query("SELECT h FROM Hotel h WHERE h.hno = :hno")
 //	    List<Hotel> findByContactNo(@Param("hno") int hno);
+
+	
+
+	 
 
 }

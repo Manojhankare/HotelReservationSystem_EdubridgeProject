@@ -22,5 +22,7 @@ public interface HotelOwnerService {
 	boolean isContactNumberUnique(String contactNumber);
 
 	boolean isUsernameUnique(String username);
+
+	HotelOwner loginhotelOwner(String username, String password);
 }
 

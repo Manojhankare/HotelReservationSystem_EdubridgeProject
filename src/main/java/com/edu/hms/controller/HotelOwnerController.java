@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
+ 
 import com.edu.hms.entity.HotelOwner;
 import com.edu.hms.service.HotelOwnerService;
 
@@ -30,6 +30,12 @@ public class HotelOwnerController {
 	public ResponseEntity<HotelOwner> saveHotelOwner(@RequestBody HotelOwner hotelOwner) {
 		HotelOwner savedHotelOwner = hotelOwnerService.saveHotelOwner(hotelOwner);
 		return new ResponseEntity<>(savedHotelOwner, HttpStatus.CREATED);
+	}
+	
+	@PostMapping("/hotelOwner/loginhotelOwner/{username}/{password}")
+	public HotelOwner loginhotelOwner(@PathVariable ("username")String username,@PathVariable("password") String password ) {
+		return hotelOwnerService.loginhotelOwner(username,password);
+		
 	}
 
 	@GetMapping("/hotelOwner/getAll")

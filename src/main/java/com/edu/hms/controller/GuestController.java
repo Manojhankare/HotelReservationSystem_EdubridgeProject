@@ -38,7 +38,7 @@ public class GuestController {
 	}
 	
 	
-	@GetMapping("/checkUserExists/{username}/{password}")
+	@GetMapping("/checkGuestExists/{username}/{password}")
 	public ResponseEntity<Guest> checkUserExists(@PathVariable("username") String username, @PathVariable("password") String password) {
 	    System.out.println("Inside checkuser ");
 	    Guest existingGuest = guestService.findbyNamePass(username, password);
@@ -90,18 +90,18 @@ public class GuestController {
 		Guest updatedGuest = guestService.updateAddress(guestId,newAddress);
 		return new ResponseEntity<>(updatedGuest,HttpStatus.OK);
 	}
-	@GetMapping("/guest/checkUniqueEmail/{gemail}")
-    public ResponseEntity<Boolean> checkUniqueEmail(@PathVariable String gemail) {
-        boolean isUnique = guestService.isEmailUnique(gemail);
+	@GetMapping("/guest/checkUniqueEmail/{guestEmail}")
+    public ResponseEntity<Boolean> checkUniqueEmail(@PathVariable String guestEmail) {
+        boolean isUnique = guestService.isEmailUnique(guestEmail);
         return new ResponseEntity<>(isUnique, HttpStatus.OK);
     }
 
-    @GetMapping("/guest/checkUniqueContactNumber/{guestcontactno}")
+    @GetMapping("/guest/checkUniqueContactNumber/{guestContactNo}")
     public ResponseEntity<Boolean> checkUniqueContactNumber(@PathVariable String guestContactNo) {
         boolean isUnique = guestService.isContactNumberUnique(guestContactNo);
         return new ResponseEntity<>(isUnique, HttpStatus.OK);
     }
-    @GetMapping("/guest/checkUniqueUsername/{guestusername}")
+    @GetMapping("/guest/checkUniqueUsername/{guestUsername}")
     public ResponseEntity<Boolean> checkUniqueUsername(@PathVariable String guestUsername) {
         boolean isUnique = guestService.isUsernameUnique(guestUsername);
         return new ResponseEntity<>(isUnique, HttpStatus.OK);

@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+
 import com.edu.hms.entity.Hotel;
 import com.edu.hms.exceptions.GlobalException;
+ 
 import com.edu.hms.service.HotelService;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -40,6 +42,28 @@ public class HotelController {
 		List<Hotel> hotels = hotelService.getAllHotels();
 		return new ResponseEntity<>(hotels, HttpStatus.OK);
 	}
+	
+	@GetMapping("/byOwner/{ownerId}")
+    public ResponseEntity<List<Hotel>> getHotelsByOwner(@PathVariable int ownerId) {
+//        try {
+//            List<Hotel> hotels = hotelService.getHotelsByOwnerId(ownerId);
+//            return new ResponseEntity<>(hotels, HttpStatus.OK);
+//        } catch (GlobalException e) {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+		List<Hotel> hotels = hotelService.getHotelsByOwnerId(ownerId);
+        return new ResponseEntity<>(hotels, HttpStatus.OK);
+    }
+	
+	  @PutMapping("/hotels/setHotelOwnerToHotel/{hotelId}/{ownerId}")
+	    public ResponseEntity<String> setHotelOwnerToHotel(@PathVariable int hotelId, @PathVariable int ownerId) {
+	        try {
+	            hotelService.setHotelOwnerToHotel(hotelId, ownerId);
+	            return ResponseEntity.ok("Hotel owner set successfully.");
+	        } catch (Exception e) {
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error setting hotel owner: " + e.getMessage());
+	        }
+	    }
 
 	@GetMapping("/hotels/getById/{hId}")
 	public ResponseEntity<Hotel> getHotelById(@PathVariable("hId") int hId) throws GlobalException {
@@ -78,6 +102,6 @@ public class HotelController {
 		List<Hotel> hotels = hotelService.searchByOwner(ownerId);
 		return new ResponseEntity<>(hotels, HttpStatus.OK);
 	}
-
-
+	
+	
 }
