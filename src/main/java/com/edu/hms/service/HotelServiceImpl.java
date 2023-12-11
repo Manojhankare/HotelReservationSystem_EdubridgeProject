@@ -2,6 +2,7 @@ package com.edu.hms.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -9,10 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.edu.hms.entity.Hotel;
+import com.edu.hms.entity.HotelDTO;
 import com.edu.hms.entity.HotelOwner;
+import com.edu.hms.entity.HotelOwnerDTO;
+import com.edu.hms.entity.Room;
+import com.edu.hms.entity.RoomDTO;
 import com.edu.hms.exceptions.GlobalException;
 import com.edu.hms.repository.HotelOwnerRepository;
-import com.edu.hms.repository.HotelRepository;
+import com.edu.hms.repository.HotelRepository; 
 
 @Service
 public class HotelServiceImpl implements HotelService {
@@ -20,9 +25,12 @@ public class HotelServiceImpl implements HotelService {
 	@Autowired
 	private HotelRepository hotelRepository;
 	
+	 
+	
 	@Autowired
 	private HotelOwnerRepository hotelOwnerRepository;
-
+	
+// follwing method used to store hotel without services list 
 	@Override
 	public Hotel saveHotel(@Valid Hotel hotel) throws GlobalException {
 		if (hotel.getHotelName() == null || hotel.getHotelName().isEmpty()) {
@@ -31,6 +39,27 @@ public class HotelServiceImpl implements HotelService {
 
 		return hotelRepository.save(hotel);
 	}
+//	
+	
+//	public Hotel saveHotel(@Valid Hotel hotel) throws GlobalException {
+//	    if (hotel.getHotelName() == null || hotel.getHotelName().isEmpty()) {
+//	        throw new GlobalException("Hotel name cannot be empty");
+//	    }
+//
+//	    // Save the hotel without services
+//	    Hotel savedHotel = hotelRepository.save(hotel);
+//
+//	    // Set the hotel for each service and save them
+//	    List<HotelServices> services = hotel.getHotelServices();
+//	    if (services != null && !services.isEmpty()) {
+//	        for (HotelServices service : services) {
+//	            service.getHotels().add(savedHotel);
+//	            hotelServicesRepository.save(service);
+//	        }
+//	    }
+//
+//	    return savedHotel;
+//	}
 
 	@Override
 	public List<Hotel> getAllHotels() {
@@ -81,8 +110,10 @@ public class HotelServiceImpl implements HotelService {
 	}
 
 	@Override
-	public List<Hotel> searchByOwner(int ownerId) {
-		return hotelRepository.findByHotelOwnerOwnerId(ownerId);
+	public List<Hotel> searchByOwnerId(int ownerId) {
+		List<Hotel> hotels=hotelRepository.findByHotelOwnerOwnerId(ownerId);
+		System.out.println(hotels);
+		return hotels;
 	}
 
 	@Override
@@ -103,26 +134,96 @@ public class HotelServiceImpl implements HotelService {
 	    return hotelRepository.save(hotel);
 	}
 	
-	@Override
-	public List<Hotel> getHotelsByOwnerId(int ownerId) {
-        return hotelRepository.findByHotelOwnerOwnerId(ownerId);
-//                .orElseThrow(() -> new GlobalException("Hotels not found for owner with id: " + ownerId));
-        
-        
-    }
 //	@Override
-//	public Hotel getHotelByOwnerId(int ownerId) throws GlobalException {
-//		Hotel h= HotelRepository.find(ownerId);
-//	
-//		Hotel h1=null;
-//		if(h == null) {
-//			throw new GlobalException("Hotel Admin with id "+ownerId+" not found");
-//		}
-//		System.out.println(ownerId);
-//		
-//		h1=HotelRepository.findByHotelOwnerOwnerId(ownerId);
-//		System.out.println(h1);
-//		return h1;	
-//}
+//	public List<Hotel> getHotelsByOwnerId(int ownerId) throws GlobalException {
+//	    try {
+//	        return hotelRepository.findByHotelOwnerOwnerId(ownerId);
+//	    } catch (Exception ex) {
+//	        throw new GlobalException("Hotels not found for owner with id: " + ownerId);
+//	    }
+//	}
 
+ 
+	@Override
+	public List<Hotel> getHotelsByOwnerId(int ownerId) throws GlobalException {
+	    List<Hotel> hotels = hotelRepository.findByHotelOwnerOwnerId(ownerId);
+
+	    if (hotels.isEmpty()) {
+	        throw new GlobalException("No hotels found for owner with id " + ownerId);
+	    }
+
+	    return hotels;
+	}
+
+
+	@Override
+	public List<Hotel> searchByOwner(int ownerId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	    public List<HotelDTO> getAllHotelDTOs() {
+	        List<Hotel> hotels = hotelRepository.findAll();
+	        return hotels.stream()
+	                .map(this::convertToDTO)
+	                .collect(Collectors.toList());
+	    }
+
+	    public List<HotelDTO> getHotelDTOsByOwnerId(int ownerId) throws GlobalException {
+	        List<Hotel> hotels = hotelRepository.findByHotelOwnerOwnerId(ownerId);
+
+	        if (hotels.isEmpty()) {
+	            throw new GlobalException("No hotels found for owner with id " + ownerId);
+	        }
+
+	        return hotels.stream()
+	                .map(this::convertToDTO)
+	                .collect(Collectors.toList());
+	    }
+
+	    private HotelDTO convertToDTO(Hotel hotel) {
+	        HotelDTO hotelDTO = new HotelDTO();
+	        hotelDTO.setHotelId(hotel.getHotelId());
+	        hotelDTO.setHotelName(hotel.getHotelName());
+	        hotelDTO.setHotelEmail(hotel.getHotelEmail());
+	        hotelDTO.setHotelContactNo(hotel.getHotelContactNo());
+	        hotelDTO.setHotelAddress(hotel.getHotelAddress());
+	        hotelDTO.setHotelCity(hotel.getHotelCity());
+	        hotelDTO.setHotelDescription(hotel.getHotelDescription());
+	        hotelDTO.setHotelServices(hotel.getHotelServices());
+	        hotelDTO.setHotelStatus(hotel.getHotelStatus());
+	        hotelDTO.setHotelImgUrl(hotel.getHotelImgUrl());
+
+	        // Convert HotelOwner to HotelOwnerDTO
+	        HotelOwnerDTO ownerDTO = convertToDTO(hotel.getHotelOwner());
+	        hotelDTO.setHotelOwner(ownerDTO);
+
+	        // Convert Rooms to RoomDTOs
+	        List<RoomDTO> roomDTOs = hotel.getRoom().stream()
+	                .map(this::convertToDTO)
+	                .collect(Collectors.toList());
+	        hotelDTO.setRooms(roomDTOs);
+
+	        return hotelDTO;
+	    }
+
+	    private HotelOwnerDTO convertToDTO(HotelOwner owner) {
+	        HotelOwnerDTO ownerDTO = new HotelOwnerDTO();
+	        ownerDTO.setOwnerId(owner.getOwnerId());
+	        ownerDTO.setOwnerName(owner.getOwnerName());
+	        ownerDTO.setOwnerEmail(owner.getOwnerEmail());
+	        ownerDTO.setOwnerContactNumber(owner.getOwnerContactNumber());
+	        ownerDTO.setOwnerUsername(owner.getOwnerUsername());
+	        return ownerDTO;
+	    }
+
+	    private RoomDTO convertToDTO(Room room) {
+	        RoomDTO roomDTO = new RoomDTO();
+	        roomDTO.setRoomId(room.getRoomId());
+	        roomDTO.setRoomType(room.getRoomType());
+	        roomDTO.setRoomPrice(room.getRoomPrice());
+	        return roomDTO;
+	    }
+
+	 
 }

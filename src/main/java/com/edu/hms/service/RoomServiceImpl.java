@@ -43,8 +43,8 @@ public class RoomServiceImpl implements RoomService {
 		existingRoom.setRoomNo(updatedRoom.getRoomNo());
 		existingRoom.setRoomType(updatedRoom.getRoomType());
 		existingRoom.setRoomPrice(updatedRoom.getRoomPrice());
-		existingRoom.setCapacityAdults(updatedRoom.getCapacityAdults());
-		existingRoom.setCapacityChildren(updatedRoom.getCapacityChildren());
+		existingRoom.setRoomcapacityAdults(updatedRoom.getRoomcapacityAdults());
+		existingRoom.setRoomcapacityChildren(updatedRoom.getRoomcapacityChildren());
 
 		return existingRoom;
 	}
@@ -67,7 +67,7 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public List<Room> searchByCapacity(int adults, int children) {
-        return roomRepository.findByCapacityAdultsAndCapacityChildren(adults, children);
+        return roomRepository.findByRoomcapacityAdultsAndRoomcapacityChildren(adults, children);
     }
 
     @Override

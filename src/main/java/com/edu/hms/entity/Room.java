@@ -13,7 +13,7 @@ public class Room {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int rId;
+	private int roomId;
 
 	@Column(name = "roomNumber", nullable = false, unique = true)
 	private int roomNo;
@@ -25,13 +25,13 @@ public class Room {
 	private double roomPrice;
 
 	@Column(nullable = false)
-	private int capacityAdults;
+	private int roomcapacityAdults;
 
 	@Column(nullable = false)
-	private int capacityChildren;
+	private int roomcapacityChildren;
 
 	@ManyToOne
-	@JoinColumn(name = "hId")
+	@JoinColumn(name = "hotelId")
 	private Hotel hotel;
 
 	@ManyToOne
@@ -42,26 +42,51 @@ public class Room {
 		super();
 	}
 
-	public Room(int rId, int roomNo, String roomType, double roomPrice, int capacityAdults, int capacityChildren,
-			Hotel hotel, Reservations reservation) {
+	 
+	public Room(int roomId, int roomNo, String roomType, double roomPrice, int roomcapacityAdults,
+			int roomcapacityChildren, Hotel hotel, Reservations reservation) {
 		super();
-		this.rId = rId;
+		this.roomId = roomId;
 		this.roomNo = roomNo;
 		this.roomType = roomType;
 		this.roomPrice = roomPrice;
-		this.capacityAdults = capacityAdults;
-		this.capacityChildren = capacityChildren;
+		this.roomcapacityAdults = roomcapacityAdults;
+		this.roomcapacityChildren = roomcapacityChildren;
 		this.hotel = hotel;
 		this.reservation = reservation;
 	}
+	
 
-	public int getrId() {
-		return rId;
+
+	public int getRoomId() {
+		return roomId;
 	}
 
-	public void setrId(int rId) {
-		this.rId = rId;
+
+	public void setRoomId(int roomId) {
+		this.roomId = roomId;
 	}
+
+
+	public int getRoomcapacityAdults() {
+		return roomcapacityAdults;
+	}
+
+
+	public void setRoomcapacityAdults(int roomcapacityAdults) {
+		this.roomcapacityAdults = roomcapacityAdults;
+	}
+
+
+	public int getRoomcapacityChildren() {
+		return roomcapacityChildren;
+	}
+
+
+	public void setRoomcapacityChildren(int roomcapacityChildren) {
+		this.roomcapacityChildren = roomcapacityChildren;
+	}
+
 
 	public int getRoomNo() {
 		return roomNo;
@@ -87,22 +112,6 @@ public class Room {
 		this.roomPrice = roomPrice;
 	}
 
-	public int getCapacityAdults() {
-		return capacityAdults;
-	}
-
-	public void setCapacityAdults(int capacityAdults) {
-		this.capacityAdults = capacityAdults;
-	}
-
-	public int getCapacityChildren() {
-		return capacityChildren;
-	}
-
-	public void setCapacityChildren(int capacityChildren) {
-		this.capacityChildren = capacityChildren;
-	}
-
 	public Hotel getHotel() {
 		return hotel;
 	}
@@ -121,9 +130,9 @@ public class Room {
 
 	@Override
 	public String toString() {
-		return "Room [rId=" + rId + ", roomNo=" + roomNo + ", roomType=" + roomType + ", roomPrice=" + roomPrice
-				+ ", capacityAdults=" + capacityAdults + ", capacityChildren=" + capacityChildren + ", hotel=" + hotel
-				+ ", reservation=" + reservation + "]";
+		return "Room [roomId=" + roomId + ", roomNo=" + roomNo + ", roomType=" + roomType + ", roomPrice=" + roomPrice
+				+ ", roomcapacityAdults=" + roomcapacityAdults + ", roomcapacityChildren=" + roomcapacityChildren
+				+ ", hotel=" + hotel + ", reservation=" + reservation + "]";
 	}
 
 }

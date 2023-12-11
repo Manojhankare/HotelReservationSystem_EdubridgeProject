@@ -17,14 +17,17 @@ public interface HotelRepository extends JpaRepository<Hotel, Integer>{
 
 	List<Hotel> findByHotelName(String name);
 
-	List<Hotel> findByHotelOwnerOwnerId(int ownerId);
+//	Hotel findByHotelOwnerOwnerId(int ownerId);
 
 	List<Hotel> findByHotelNameContaining(String name);
 
 	List<Hotel> findByHotelContactNo(int hotelContactNo);
+	@Query(value="select * from hotel where hotel_owner_owner_id=?", nativeQuery = true)
+//	public List<Hotel> findByHotelOwnerId(int hotelOwner);
+	
+//	List<Hotel> findByHotelOwnerOwnerId(int ownerId);
 
-	@Query(value="select * from hotel where hotelOwner=?1", nativeQuery = true)
-	public Hotel findByHotelOwnerId(Integer hotelOwner);
+	List<Hotel> findByHotelOwnerOwnerId(int ownerId);
 	
 //	 Optional<Hotel> findByHotelOwnerId(int ownerId);
 	

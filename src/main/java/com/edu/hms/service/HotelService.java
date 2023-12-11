@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import com.edu.hms.entity.Hotel;
+import com.edu.hms.entity.HotelDTO;
 import com.edu.hms.exceptions.GlobalException;
  
  
@@ -30,7 +31,13 @@ public interface HotelService {
 
 	Hotel setHotelOwnerToHotel(int hotelId, int ownerId) throws GlobalException;
 
-	List<Hotel> getHotelsByOwnerId(int ownerId);
+	List<Hotel> getHotelsByOwnerId(int ownerId) throws GlobalException;
+
+	List<Hotel> searchByOwnerId(int ownerId);
+
+	List<HotelDTO> getAllHotelDTOs();
+
+	List<HotelDTO> getHotelDTOsByOwnerId(int ownerId) throws GlobalException;
 	
 //	public Hotel getHotelByOwnerId(int ownerId) throws GlobalException;
 

@@ -1,15 +1,23 @@
 package com.edu.hms.entity;
 
-import javax.persistence.Column;
+import java.util.List;
+ 
+import javax.persistence.Column; 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Hotel {
@@ -32,7 +40,7 @@ public class Hotel {
 	@NotBlank(message = "Contact Number Should not be null!!!")
 	@Size(max = 10, message = "Contact number should not exceed 10 characters")
 	@Pattern(regexp = "^[0-9]*$", message = "Contact number should only contain digits")
-    private String hotelContactNo;
+	private String hotelContactNo;
 
 	@Column(name = "Address", nullable = false, length = 90)
 	@NotBlank(message = "Hotel address should not be blank")
@@ -46,8 +54,8 @@ public class Hotel {
 
 	@Column(length = 255, nullable = false)
 	private String hotelDescription;
-
-	@Column(name = "services", length = 255)
+	
+	@Column(length = 255, nullable = false)	 
 	private String hotelServices;
 
 	@Column(name = "Status", length = 10, nullable = false)
@@ -56,8 +64,14 @@ public class Hotel {
 	@Column
 	private String hotelImgUrl;// storing url of image of hotel..
 
+//	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonIgnore
 	@ManyToOne
+    @JoinColumn(name = "owner_id")
 	private HotelOwner hotelOwner;
+
+	@OneToMany(mappedBy = "hotel")
+    private List<Room> room;
 
 	public Hotel() {
 		super();
@@ -143,6 +157,7 @@ public class Hotel {
 	public void setHotelDescription(String hotelDescription) {
 		this.hotelDescription = hotelDescription;
 	}
+ 
 
 	public String getHotelServices() {
 		return hotelServices;
@@ -167,13 +182,21 @@ public class Hotel {
 	public void setHotelOwner(HotelOwner hotelOwner) {
 		this.hotelOwner = hotelOwner;
 	}
+	public List<Room> getRoom() {
+		return room;
+	}
+	public void setRoom(List<Room> room) {
+		this.room = room;
+	}
 
 	@Override
 	public String toString() {
 		return "Hotel [hotelId=" + hotelId + ", hotelName=" + hotelName + ", hotelEmail=" + hotelEmail
 				+ ", hotelContactNo=" + hotelContactNo + ", hotelAddress=" + hotelAddress + ", hotelCity=" + hotelCity
-				+ ", hotelServices=" + hotelServices + ", hotelImgUrl=" + hotelImgUrl + ", hotelOwner=" + hotelOwner
-				+ "]";
+				+ ", hotelDescription=" + hotelDescription + ", hotelServices=" + hotelServices
+				+ ", hotelStatus=" + hotelStatus + ", hotelImgUrl=" + hotelImgUrl + ", hotelOwner=" + hotelOwner
+				+ ", room=" + room + "]";
 	}
 
+	 
 }

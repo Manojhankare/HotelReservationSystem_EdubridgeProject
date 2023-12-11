@@ -2,8 +2,10 @@ package com.edu.hms.entity;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,6 +14,9 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class HotelOwner {
@@ -48,8 +53,13 @@ public class HotelOwner {
 			+ "- At least 8 characters long\n" + "- At least one uppercase letter\n" + "- At least one digit\n"
 			+ "- At least one symbol (@$!%*?&)")
 	private String password;
+	
 
-	@OneToMany(mappedBy = "hotelOwner")
+//	@JsonIgnore
+//	@OneToMany(mappedBy = "hotelOwner")
+////    @JsonManagedReference	
+	@OneToMany(mappedBy = "hotelOwner", cascade = CascadeType.ALL)
+	@JsonIgnore
 	private List<Hotel> hotel; // One hotel owner can have multiple hotels
 
 	public HotelOwner() {

@@ -1,5 +1,5 @@
 package com.edu.hms.controller;
-
+ 
 import java.util.List;
 
 import javax.validation.Valid;
@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import com.edu.hms.entity.Hotel;
+import com.edu.hms.entity.HotelDTO;
 import com.edu.hms.exceptions.GlobalException;
  
 import com.edu.hms.service.HotelService;
@@ -29,12 +30,22 @@ public class HotelController {
 	@Autowired
 	private HotelService hotelService;
 
+//	@PostMapping("/hotels/savehotel")
+//	public ResponseEntity<Hotel> saveHotel(@Valid @RequestBody Hotel hotel) throws GlobalException {
+//		Hotel savedHotel = hotelService.saveHotel(hotel);
+//		//update hotelowner id
+//		return new ResponseEntity<>(savedHotel, HttpStatus.CREATED);
+//	}
+	
 	@PostMapping("/hotels/savehotel")
 	public ResponseEntity<Hotel> saveHotel(@Valid @RequestBody Hotel hotel) throws GlobalException {
-		Hotel savedHotel = hotelService.saveHotel(hotel);
-		//update hotelowner id
-		return new ResponseEntity<>(savedHotel, HttpStatus.CREATED);
+	    // Check if hotelServices is a boolean, and if so, convert it to an empty list
+	
+	    Hotel savedHotel = hotelService.saveHotel(hotel);
+	    return new ResponseEntity<>(savedHotel, HttpStatus.CREATED);
 	}
+	
+
 	//
 
 	@GetMapping("/hotels/getAll")
@@ -43,17 +54,50 @@ public class HotelController {
 		return new ResponseEntity<>(hotels, HttpStatus.OK);
 	}
 	
-	@GetMapping("/byOwner/{ownerId}")
-    public ResponseEntity<List<Hotel>> getHotelsByOwner(@PathVariable int ownerId) {
-//        try {
-//            List<Hotel> hotels = hotelService.getHotelsByOwnerId(ownerId);
-//            return new ResponseEntity<>(hotels, HttpStatus.OK);
-//        } catch (GlobalException e) {
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
-		List<Hotel> hotels = hotelService.getHotelsByOwnerId(ownerId);
-        return new ResponseEntity<>(hotels, HttpStatus.OK);
+	@GetMapping("/hotels/getHotelsByOwnerId/{ownerId}")
+	public ResponseEntity<?> getHotelsByOwnerId(@PathVariable int ownerId) {
+	    try {
+	        List<Hotel> hotels = hotelService.getHotelsByOwnerId(ownerId);
+	        return new ResponseEntity<>(hotels, HttpStatus.OK);
+	    } catch (GlobalException e) {
+	        return new ResponseEntity<>("Hotels not found for owner with id: " + ownerId, HttpStatus.NOT_FOUND);
+	    } catch (Exception e) {
+	        return new ResponseEntity<>("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
+	    }
+	}
+	
+	//using DTO
+	@GetMapping("/hotels/getAllHotelDTOs")
+    public ResponseEntity<List<HotelDTO>> getAllHotelDTOs() {
+        List<HotelDTO> hotelDTOs = hotelService.getAllHotelDTOs();
+        return new ResponseEntity<>(hotelDTOs, HttpStatus.OK);
     }
+
+    @GetMapping("/hotels/getHotelDTOsByOwner/{ownerId}")
+    public ResponseEntity<List<HotelDTO>> getHotelDTOsByOwnerId(@PathVariable int ownerId) {
+        try {
+            List<HotelDTO> hotelDTOs = hotelService.getHotelDTOsByOwnerId(ownerId);
+            return new ResponseEntity<>(hotelDTOs, HttpStatus.OK);
+        } catch (GlobalException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+	
+//	@GetMapping("/hotels/getHotelsByOwnerId/{ownerId}")
+//	public ResponseEntity<List<Hotel>> getHotelsByOwnerId(@PathVariable int ownerId) {
+//	    try {
+//	        List<Hotel> hotels = hotelService.getHotelsByOwnerId(ownerId);
+//	        return new ResponseEntity<>(hotels, HttpStatus.OK);
+//	    } catch (GlobalException e) {
+//	        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//	    }
+//	}
+//
+//	@GetMapping("/hotels/getHotelsByOwnerId/{ownerId}")
+//	public Hotel getHotelsByOwnerId(@PathVariable ("ownerId") int ownerId) throws GlobalException
+//	{
+//		return hotelService.getHotelsByOwnerId(ownerId);
+//	}
 	
 	  @PutMapping("/hotels/setHotelOwnerToHotel/{hotelId}/{ownerId}")
 	    public ResponseEntity<String> setHotelOwnerToHotel(@PathVariable int hotelId, @PathVariable int ownerId) {
